@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CourseManagementBean/CourseManagementBase.iml" filepath="$PROJECT_DIR$/CourseManagementBean/CourseManagementBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseApplicationLibrary/BaseApplicationLibrary.iml" filepath="$PROJECT_DIR$/BaseApplicationLibrary/BaseApplicationLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/CourseManagementBean/CourseManagementBean.iml" filepath="$PROJECT_DIR$/CourseManagementBean/CourseManagementBean.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CourseManagementBean/CourseManagementBeant.iml" filepath="$PROJECT_DIR$/CourseManagementBean/CourseManagementBeant.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CourseManagementClient/CourseManagementClient.iml" filepath="$PROJECT_DIR$/CourseManagementClient/CourseManagementClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StudentManagementBean/StudentManagementBean.iml" filepath="$PROJECT_DIR$/StudentManagementBean/StudentManagementBean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StudentManagementClient/StudentManagementClient.iml" filepath="$PROJECT_DIR$/StudentManagementClient/StudentManagementClient.iml" />
     </modules>
   </component>
 </project>
