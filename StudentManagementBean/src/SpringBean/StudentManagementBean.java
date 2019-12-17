@@ -32,7 +32,7 @@ public class StudentManagementBean {
         do {
             System.out.println("1- Show registered students." +
                     "\n2- Add student." +
-                    "\n3- Edit student's grades" +
+                    "\n3- Edit student's marks" +
                     "\n4- Calculate a student's grade." +
                     "\n5- Set course's total marks." +
                     "\n6- Return to main menu.\n");
