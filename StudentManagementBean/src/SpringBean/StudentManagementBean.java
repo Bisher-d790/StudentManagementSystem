@@ -34,7 +34,8 @@ public class StudentManagementBean {
                     "\n2- Add student." +
                     "\n3- Edit student's grades" +
                     "\n4- Calculate a student's grade." +
-                    "\n5- Return to main menu.\n");
+                    "\n5- Set course's total marks." +
+                    "\n6- Return to main menu.\n");
 
             try {
                 switch (input.nextInt()) {
@@ -61,7 +62,7 @@ public class StudentManagementBean {
                         if (courseManager.hasStudentIndex(index)) {
                             System.out.println("Enter student's Midterm / Project / Final Exam marks sequentially:");
 
-                            if (courseManager.editStudentGrade(index, input.nextFloat(), input.nextFloat(), input.nextFloat()))
+                            if (courseManager.editStudentMarks(index, input.nextFloat(), input.nextFloat(), input.nextFloat()))
                                 System.out.println("Student's record edited successfully!");
                             else
                                 System.out.println("Error editing record!. Check entered parameters");
@@ -72,12 +73,23 @@ public class StudentManagementBean {
                     case 4:
                         System.out.println("Enter the student's index:");
                         index = input.nextInt() - 1;
-                        if (!courseManager.calculateStudentGrade(index)) {
-                            System.out.println("Student's grades:\n" + courseManager.getStudentGrade(index).toString());
+                        if (courseManager.hasStudentIndex(index)) {
+                            if (courseManager.calculateStudentGrade(index))
+                                System.out.println("Student's grades:\n" + courseManager.getStudentGrade(index).toString());
+                            else
+                                System.out.println("Course grades are invalid.");
                         } else System.out.println("Student index invalid!.");
                         break;
 
                     case 5:
+                        System.out.println("Enter course's Midterm / Project / Final Exam total marks sequentially:");
+                        if (courseManager.setCourseMarks(input.nextInt(), input.nextInt(), input.nextInt()))
+                            System.out.println("Course total marks set successfully!");
+                        else
+                            System.out.println("Course total marks should sum to 100.");
+                        break;
+
+                    case 6:
                         returnCondition = true;
                         break;
 

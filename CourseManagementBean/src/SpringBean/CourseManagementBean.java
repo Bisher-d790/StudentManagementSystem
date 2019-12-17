@@ -13,27 +13,42 @@ public class CourseManagementBean {
     private ArrayList<Student> enrolledStudents;
     private ArrayList<Grade> studentsGrades;
 
-    CourseManagementBean(String courseName, String courseCode) {
+    public CourseManagementBean(String courseName, String courseCode) {
         course = new Course(courseName, courseCode);
         enrolledStudents = new ArrayList<>();
         studentsGrades = new ArrayList<>();
     }
 
+    public boolean setCourseMarks(int midterm, int project, int exam) {
+        if (midterm + project + exam != 100) return false;
+
+        course.setMidTermFUll(midterm);
+        course.setProjectFUll(project);
+        course.setExamFUll(exam);
+
+        return true;
+    }
+
+    public boolean areCourseMarksSet() {
+        return course.getMidTermFUll() + course.getProjectFUll() + course.getExamFUll() == 100;
+    }
+
     public boolean addStudent(String studentName, String studentMetric) {
-        if (studentName.isBlank() || studentMetric.isBlank()) return false;
+        if (studentName == null || studentMetric == null || studentName.isBlank() || studentMetric.isBlank())
+            return false;
 
         return enrolledStudents.add(new Student(studentName, studentMetric))
                 && studentsGrades.add(new Grade(0, 0, 0));
     }
 
     public boolean calculateStudentGrade(int index) {
-        if (!hasStudentIndex(index)) return false;
+        if (!hasStudentIndex(index) || !areCourseMarksSet()) return false;
 
         float midtermMark = studentsGrades.get(index).getMidtermMark();
         float projectMark = studentsGrades.get(index).getProjectMark();
         float examMark = studentsGrades.get(index).getExamMark();
 
-        float grade = midtermMark + projectMark + examMark / 3;
+        float grade = midtermMark + projectMark + examMark;
 
         studentsGrades.get(index).setFinalGrade(grade);
 
@@ -84,8 +99,10 @@ public class CourseManagementBean {
         return enrolledStudents;
     }
 
-    public boolean editStudentGrade(int index, float midterm, float project, float exam) {
+    public boolean editStudentMarks(int index, float midterm, float project, float exam) {
         if (index >= enrolledStudents.size() || midterm < 0 || project < 0 || exam < 0) return false;
+        if (midterm > course.getMidTermFUll() || project > course.getProjectFUll() || exam > course.getExamFUll())
+            return false;
 
         studentsGrades.get(index).setMidtermMark(midterm);
         studentsGrades.get(index).setProjectMark(project);
