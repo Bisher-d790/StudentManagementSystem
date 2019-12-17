@@ -31,13 +31,23 @@ public class StudentManagementClient {
                         System.out.println("Available courses:");
 
                         if (studentManagementBean.hasCourses()) {
-                            System.out.println(studentManagementBean.getCourses().toString());
+                            var courses = studentManagementBean.getCourses();
+                            for (int i = 0; i < courses.size(); i++) {
+                                System.out.println((i + 1) + "-\t" + courses.get(i));
+                            }
+                            System.out.println();
 
                             System.out.println("Select a course number:\t");
-                            studentManagementBean.manageCourse(input.nextInt() - 1);
+                            int index = input.nextInt() - 1;
+                            if (index >= 0 && index < studentManagementBean.getCourses().size())
+                                studentManagementBean.manageCourse(index);
+                            else
+                                System.out.println("Course index invalid!.");
                         } else {
                             System.out.println("No available courses registered.");
                         }
+
+                        System.out.println();
                         break;
 
                     case 2:
@@ -47,6 +57,8 @@ public class StudentManagementClient {
                             System.out.println("Course registered successfully!");
                         else
                             System.out.println("Error entering parameters!.");
+
+                        System.out.println();
                         break;
 
                     case 3:

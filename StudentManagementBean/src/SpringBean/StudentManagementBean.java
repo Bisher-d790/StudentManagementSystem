@@ -13,7 +13,7 @@ public class StudentManagementBean {
     ApplicationContext context;
     ArrayList<CourseManagementBean> courseManagementBeans;
 
-    StudentManagementBean() {
+    public StudentManagementBean() {
         context = new ClassPathXmlApplicationContext("CourseManagerBeans.xml");
         courseManagementBeans = new ArrayList<>();
     }
@@ -42,7 +42,11 @@ public class StudentManagementBean {
                     case 1:
                         System.out.println("Registered students:");
                         if (courseManager.hasStudents()) {
-                            System.out.println(courseManager.getRegisteredStudents().toString());
+                            var students = courseManager.getRegisteredStudents();
+                            for (int i = 0; i < students.size(); i++) {
+                                System.out.println((i + 1) + "-\t" + students.get(i));
+                            }
+                            System.out.println();
                         } else System.out.println("No available students registered for this course.");
                         break;
 
@@ -54,20 +58,28 @@ public class StudentManagementBean {
                         else
                             System.out.println("Error entering parameters.");
 
+                        System.out.println();
                         break;
 
                     case 3:
                         System.out.println("Enter the student's index:");
                         int index = input.nextInt() - 1;
-                        if (courseManager.hasStudentIndex(index)) {
-                            System.out.println("Enter student's Midterm / Project / Final Exam marks sequentially:");
+                        if (courseManager.areCourseMarksSet()) {
+                            if (courseManager.hasStudentIndex(index)) {
+                                System.out.println("Enter student's Midterm (" + courseManager.getCourse().getMidTermFUll() + "%) /" +
+                                        " \nProject (" + courseManager.getCourse().getProjectFUll() + ") /" +
+                                        " \nFinal Exam marks (" + courseManager.getCourse().getExamFUll() + ") sequentially:");
 
-                            if (courseManager.editStudentMarks(index, input.nextFloat(), input.nextFloat(), input.nextFloat()))
-                                System.out.println("Student's record edited successfully!");
-                            else
-                                System.out.println("Error editing record!. Check entered parameters");
+                                if (courseManager.editStudentMarks(index, input.nextFloat(), input.nextFloat(), input.nextFloat()))
+                                    System.out.println("Student's record edited successfully!");
+                                else
+                                    System.out.println("Error editing record!. Check entered parameters");
+                            } else
+                                System.out.println("Student index out of range!.");
                         } else
-                            System.out.println("Student index out of range!.");
+                            System.out.println("Course total marks are not set!. ");
+
+                        System.out.println();
                         break;
 
                     case 4:
@@ -79,18 +91,25 @@ public class StudentManagementBean {
                             else
                                 System.out.println("Course grades are invalid.");
                         } else System.out.println("Student index invalid!.");
+
+                        System.out.println();
                         break;
 
                     case 5:
-                        System.out.println("Enter course's Midterm / Project / Final Exam total marks sequentially:");
+                        System.out.println("Enter course's Midterm / Project / Final Exam total marks sequentially:" +
+                                "\n(Course total marks should sum to 100%)");
                         if (courseManager.setCourseMarks(input.nextInt(), input.nextInt(), input.nextInt()))
                             System.out.println("Course total marks set successfully!");
                         else
                             System.out.println("Course total marks should sum to 100.");
+
+                        System.out.println();
                         break;
 
                     case 6:
                         returnCondition = true;
+
+                        System.out.println();
                         break;
 
                     default:
@@ -120,9 +139,8 @@ public class StudentManagementBean {
     }
 
     public boolean addCourse(String courseName, String courseCode) {
-        if (courseName.isBlank() || courseCode.isBlank()) return false;
+        if (courseName == null || courseCode == null || courseName.isBlank() || courseCode.isBlank()) return false;
 
-        courseManagementBeans.add((CourseManagementBean) context.getBean("courseManagementBean", courseName, courseCode));
-        return true;
+        return courseManagementBeans.add((CourseManagementBean) context.getBean("courseManagementBean", courseName, courseCode));
     }
 }

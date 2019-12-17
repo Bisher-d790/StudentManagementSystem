@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Spring" level="project" />
     <orderEntry type="module" module-name="StudentManagementBean" />
+    <orderEntry type="module" module-name="BaseApplicationLibrary" />
   </component>
 </module>
