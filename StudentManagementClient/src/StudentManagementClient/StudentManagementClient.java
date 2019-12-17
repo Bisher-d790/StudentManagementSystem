@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class StudentManagementClient {
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("CourseManagerBeans.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("StudentManagerBean.xml");
 
         StudentManagementBean studentManagementBean = (StudentManagementBean) context.getBean("studentManagementBean", context);
 
@@ -52,7 +52,7 @@ public class StudentManagementClient {
                 case 3:
                     exitCondition = true;
                     break;
-                    
+
                 default:
                     break;
             }
@@ -60,6 +60,4 @@ public class StudentManagementClient {
         }
         while (!exitCondition);
     }
-}
-
 }

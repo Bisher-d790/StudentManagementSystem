@@ -2,6 +2,7 @@ package SpringBean;
 
 import Entities.Course;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,8 +12,8 @@ public class StudentManagementBean {
     ApplicationContext context;
     ArrayList<CourseManagementBean> courseManagementBeans;
 
-    StudentManagementBean(ApplicationContext context) {
-        this.context = context;
+    StudentManagementBean() {
+        context = new ClassPathXmlApplicationContext("CourseManagerBeans.xml");
         courseManagementBeans = new ArrayList<>();
     }
 
