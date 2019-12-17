@@ -5,6 +5,7 @@ import SpringBean.StudentManagementBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class StudentManagementClient {
@@ -24,39 +25,43 @@ public class StudentManagementClient {
             System.out.println("1- Choose course." +
                     "\n2- Add course." +
                     "\n3- Quit.\n");
+            try {
+                switch (input.nextInt()) {
+                    case 1:
+                        System.out.println("Available courses:");
 
-            switch (input.nextInt()) {
-                case 1:
-                    System.out.println("Available courses:");
+                        if (studentManagementBean.hasCourses()) {
+                            System.out.println(studentManagementBean.getCourses().toString());
 
-                    if (studentManagementBean.hasCourses()) {
-                        System.out.println(studentManagementBean.getCourses().toString());
+                            System.out.println("Select a course number:\t");
+                            studentManagementBean.manageCourse(input.nextInt() - 1);
+                        } else {
+                            System.out.println("No available courses registered.");
+                        }
+                        break;
 
-                        System.out.println("Select a course:\t");
-                        studentManagementBean.manageCourse(input.nextInt());
-                    } else {
-                        System.out.println("No available courses registered.");
-                    }
-                    break;
+                    case 2:
+                        System.out.println("Enter course name - code sequentially:");
 
-                case 2:
-                    System.out.println("Enter course name:");
-                    String courseName = input.nextLine();
+                        if (studentManagementBean.addCourse(input.next(), input.next()))
+                            System.out.println("Course registered successfully!");
+                        else
+                            System.out.println("Error entering parameters!.");
+                        break;
 
-                    System.out.println("Enter course code:");
-                    String courseCode = input.nextLine();
+                    case 3:
+                        exitCondition = true;
+                        break;
 
-                    studentManagementBean.addCourse(courseName, courseCode);
-                    break;
+                    default:
+                        break;
+                }
 
-                case 3:
-                    exitCondition = true;
-                    break;
-
-                default:
-                    break;
+            } catch (InputMismatchException e) {
+                e.fillInStackTrace();
+                System.out.println("Please enter a valid input.");
+                input = new Scanner(System.in);
             }
-
         }
         while (!exitCondition);
     }

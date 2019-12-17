@@ -20,14 +20,14 @@ public class CourseManagementBean {
     }
 
     public boolean addStudent(String studentName, String studentMetric) {
-        if (studentName.isBlank() && studentMetric.isBlank()) return false;
+        if (studentName.isBlank() || studentMetric.isBlank()) return false;
 
         return enrolledStudents.add(new Student(studentName, studentMetric))
                 && studentsGrades.add(new Grade(0, 0, 0));
     }
 
     public boolean calculateStudentGrade(int index) {
-        if (index >= enrolledStudents.size()) return false;
+        if (!hasStudentIndex(index)) return false;
 
         float midtermMark = studentsGrades.get(index).getMidtermMark();
         float projectMark = studentsGrades.get(index).getProjectMark();
@@ -96,5 +96,13 @@ public class CourseManagementBean {
 
     public Grade getStudentGrade(int index) {
         return studentsGrades.get(index);
+    }
+
+    public boolean hasStudents() {
+        return !enrolledStudents.isEmpty();
+    }
+
+    public boolean hasStudentIndex(int index) {
+        return (index < enrolledStudents.size()) && (index >= 0);
     }
 }

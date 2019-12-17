@@ -60,7 +60,7 @@ public class Grade {
                 ", midterm=" + midterm +
                 ", project=" + project +
                 ", exam=" + exam +
-                "gradeLetter=" + gradeLetter +
+                "\t|\ngradeLetter=" + gradeLetter +
                 ", finalGrade=" + finalGrade +
                 '}';
     }
