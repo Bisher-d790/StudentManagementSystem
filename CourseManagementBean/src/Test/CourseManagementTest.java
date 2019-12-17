@@ -3,6 +3,7 @@ package Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import Entities.GradeLetter;
 import SpringBean.CourseManagementBean;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +39,8 @@ public class CourseManagementTest {
     @Test
     public void editStudentGradeTest() {
         CourseManagementBean courseManager = new CourseManagementBean("Test", "Test");
-
         courseManager.addStudent("TestStudent", "TestMetric");
+
         assertTrue(!courseManager.editStudentMarks(0, 100, 100, 100));
         assertTrue(!courseManager.editStudentMarks(0, -1, -1, -1));
 
@@ -49,5 +50,31 @@ public class CourseManagementTest {
         assertTrue(!courseManager.editStudentMarks(0, 5, 30, 60));
 
         assertTrue(courseManager.editStudentMarks(0, 10, 40, 50));
+
+        assertEquals(courseManager.getCourse().getMidTermFUll(), 10, "midterm mark could not be set");
+        assertEquals(courseManager.getCourse().getProjectFUll(), 40, "project mark could not be set");
+        assertEquals(courseManager.getCourse().getExamFUll(), 50, "exam mark could not be set");
     }
+
+    @Test
+    public void calculateGradeTest() {
+        CourseManagementBean courseManager = new CourseManagementBean("Test", "Test");
+        courseManager.addStudent("TestStudent", "TestMetric");
+        courseManager.setCourseMarks(10, 40, 50);
+
+        courseManager.addStudent("TestStudent1", "TestMetric1");
+        courseManager.editStudentMarks(0, 10, 40, 50);
+        courseManager.calculateStudentGrade(0);
+        assertEquals(100, courseManager.getStudentGrade(0).getFinalGrade(), "Full marks Student is not calculated correctly.");
+        assertEquals(GradeLetter.A_Plus, courseManager.getStudentGrade(0).getGradeLetter(), "Full marks Student grade is not calculated correctly.");
+
+        courseManager.addStudent("TestStudent2", "TestMetric2");
+        courseManager.editStudentMarks(1, 5, 20, 25);
+        courseManager.calculateStudentGrade(1);
+        assertEquals(50, courseManager.getStudentGrade(1).getFinalGrade(), "50% marks Student is not calculated correctly.");
+        assertEquals(GradeLetter.C_Minus, courseManager.getStudentGrade(1).getGradeLetter(), "50% marks Student grade is not calculated correctly.");
+
+    }
+
+
 }

@@ -77,12 +77,9 @@ public class CourseManagementBean {
             studentsGrades.get(index).setGradeLetter(GradeLetter.C);
 
         else if (grade >= 50)
-            studentsGrades.get(index).setGradeLetter(GradeLetter.C);
-
-        else if (grade >= 45)
             studentsGrades.get(index).setGradeLetter(GradeLetter.C_Minus);
 
-        else if (grade >= 40)
+        else if (grade >= 45)
             studentsGrades.get(index).setGradeLetter(GradeLetter.D);
 
         else
